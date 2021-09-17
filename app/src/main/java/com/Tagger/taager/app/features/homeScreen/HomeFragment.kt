@@ -57,7 +57,6 @@ class HomeFragment : Fragment() {
                             viewModel.requestProducts()
                         }.show()
                     }
-                    else -> Unit
                 }
             }
         }
