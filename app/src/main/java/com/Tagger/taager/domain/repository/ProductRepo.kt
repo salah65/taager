@@ -6,5 +6,5 @@ import com.Tagger.taager.data.repositoryImp.ProductRepositoryImp
 val productRepository by lazy { ProductRepositoryImp() }
 
 interface ProductRepo {
-    suspend fun requestProducts(): Products
+    suspend fun requestProducts(): Products? = null
 }

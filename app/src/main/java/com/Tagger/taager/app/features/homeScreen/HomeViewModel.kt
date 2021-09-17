@@ -14,8 +14,11 @@ class HomeViewModel : ViewModel() {
     private val _mutableProductsFlow = MutableStateFlow<Resource<Products>>(Resource.loading())
     val productsFlow = _mutableProductsFlow.asStateFlow()
 
+    init {
+        requestProducts()
+    }
 
-    fun requestProducts() {
+    private fun requestProducts() {
         viewModelScope.launch(IO) {
             val products=getProductsUseCase()
             if (products.isNotEmpty())
