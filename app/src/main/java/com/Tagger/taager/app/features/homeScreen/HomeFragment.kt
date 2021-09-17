@@ -42,15 +42,22 @@ class HomeFragment : Fragment() {
         lifecycleScope.launchWhenStarted {
             viewModel.productsFlow.collect {
                 when (it.status) {
+                    Status.LOADING -> binding.loader.visibility = View.VISIBLE
                     Status.SUCCESS -> {
                         binding.loader.visibility = View.GONE
                         adapter.updateData(it.data!!)
                     }
-                    Status.ERROR -> Snackbar.make(
-                        requireView(),
-                        it.message ?: "",
-                        Snackbar.LENGTH_SHORT
-                    ).show()
+                    Status.ERROR -> {
+                        binding.loader.visibility=View.GONE
+                        Snackbar.make(
+                            requireView(),
+                            it.message ?: "",
+                            Snackbar.LENGTH_INDEFINITE
+                        ).setAction("Retry") {
+                            viewModel.requestProducts()
+                        }.show()
+                    }
+                    else -> Unit
                 }
             }
         }
